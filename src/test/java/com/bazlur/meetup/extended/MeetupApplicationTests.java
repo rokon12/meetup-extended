@@ -1,6 +1,6 @@
-package com.bazlur.meetup;
+package com.bazlur.meetup.extended;
 
-import com.bazlur.meetup.web.HomeController;
+import com.bazlur.meetup.extended.web.HomeController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.bazlur.meetup;
+package com.bazlur.meetup.extended;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
