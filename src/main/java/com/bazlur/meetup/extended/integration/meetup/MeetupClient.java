@@ -3,6 +3,7 @@ package com.bazlur.meetup.extended.integration.meetup;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -36,13 +37,12 @@ public class MeetupClient {
 	private final RestTemplate restTemplate;
 
 	public MeetupClient(RestTemplateBuilder restTemplateBuilder) {
-		this.restTemplate = restTemplateBuilder.additionalCustomizers(rt -> {
-			LOGGER.info("api token: {}", apiToken);
-			rt.getInterceptors().add(new MeetupAppTokenInterceptor(apiToken));
-		})
+		this.restTemplate = restTemplateBuilder.additionalCustomizers(rt ->
+			rt.getInterceptors().add(new MeetupAppTokenInterceptor(apiToken)))
 			.build();
 	}
 
+	@Cacheable("meetup.schedules")
 	public List<Meetup> getRecentNews() {
 		ResponseEntity<Meetup[]> response = doGetRecentNews("jug-bd");
 
@@ -51,6 +51,7 @@ public class MeetupClient {
 	}
 
 	private ResponseEntity<Meetup[]> doGetRecentNews(String groupName) {
+		LOGGER.info("going to fetch Recent news from :{}", groupName);
 		String url = String.format("https://api.meetup.com/%s/events", groupName);
 
 		return invoke(createRequestEntity(url), Meetup[].class);
