@@ -1,11 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/main">
 <head>
     <meta charset="UTF-8"/>
     <title>Home</title>
 </head>
 <body>
-    <h1>Hello world</h1>
+<div layout:fragment="content">
+    <section class="billboard">
+        <div class="container">
+            <h2>Meetup Extended!!!</h2>
+        </div>
+    </section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Submit a talk to the Mx!</h1>
+            <p>Share your passion</p>
+            <p><a class="btn btn-primary btn-lg" th:href="@{/submit}" role="button">Submit</a></p>
+        </div>
+    </div>
 
+    <div class="container">
+        <div class="page-header">
+            <h2>Latest Meetups</h2>
+        </div>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">RxJava for Android Developers (Bangla)</h3>
+            </div>
+            <div class="panel-body">
+                <h3><a th:href="@{/news}">Reactive programming and RxJava are hot topics and often cause for intense
+                    debate, with many questions and uncertainty. This session will cover experience adopting these new
+                    paradigms and technologies ....</a></h3>
+                <p th:inline="text">Saturday, February 4, 2017 at 10:30 PM</p>
+            </div>
+        </div>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title"> JUGBD Meetup 6.0</h3>
+            </div>
+            <div class="panel-body">
+                <h3><a th:href="@{/news}">It's Happening Again!
+                    Java User Group Bangladesh (JUGBD) is going to arrange its 6th java meetup on 25th February 2015,
+                    Saturday in the afternoon at HubDhaka
+                    ....</a></h3>
+                <p th:inline="text">Saturday, February 25, 2017 at 3:00 PM</p>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
