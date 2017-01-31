@@ -22,29 +22,18 @@
 
     <div class="container">
         <div class="page-header">
-            <h2>Latest Meetups</h2>
+            <h2>Latest News</h2>
         </div>
+
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h3 class="panel-title">RxJava for Android Developers (Bangla)</h3>
+                <h3 class="panel-title">Latest scheduled meetups</h3>
             </div>
             <div class="panel-body">
-                <h3><a th:href="@{/news}">Reactive programming and RxJava are hot topics and often cause for intense
-                    debate, with many questions and uncertainty. This session will cover experience adopting these new
-                    paradigms and technologies ....</a></h3>
-                <p th:inline="text">Saturday, February 4, 2017 at 10:30 PM</p>
-            </div>
-        </div>
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title"> JUGBD Meetup 6.0</h3>
-            </div>
-            <div class="panel-body">
-                <h3><a th:href="@{/news}">It's Happening Again!
-                    Java User Group Bangladesh (JUGBD) is going to arrange its 6th java meetup on 25th February 2015,
-                    Saturday in the afternoon at HubDhaka
-                    ....</a></h3>
-                <p th:inline="text">Saturday, February 25, 2017 at 3:00 PM</p>
+                <div th:each="meetup : ${meetups}" class="list-group-item">
+                    <a th:href="@{/news}"><h3 th:text="${meetup.name}"></h3> </a>
+                    <p class="list-group-item-text" th:text="${'Time: '+  #dates.format(meetup.time, 'dd MMMM yyyy @ hh:mm a')}"></p>
+                </div>
             </div>
         </div>
     </div>
