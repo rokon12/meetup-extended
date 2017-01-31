@@ -13,30 +13,34 @@ import java.io.Serializable;
 @Data
 public class Submission implements Serializable {
 
-	@GeneratedValue
-	@Id
-	private Long id;
+    @GeneratedValue
+    @Id
+    private Long id;
 
-	@Enumerated
-	private Track track;
+    @ManyToOne
+    @JoinColumn(name = "speaker_id")
+    private User speaker;
 
-	@Column
-	private String speakerName;
+    @Enumerated
+    private Track track;
 
-	@Column
-	private String email;
+    @Column
+    private String speakerName;
 
-	@Column
-	private String title;
+    @Column
+    private String email;
 
-	@Column
-	private SubmissionStatus status;
+    @Column
+    private String title;
 
-	@Column
-	@Lob
-	private String summary;
+    @Column
+    private SubmissionStatus status;
 
-	public Submission() {
-		this.status = SubmissionStatus.DRAFT;
-	}
+    @Column
+    @Lob
+    private String summary;
+
+    public Submission() {
+        this.status = SubmissionStatus.DRAFT;
+    }
 }

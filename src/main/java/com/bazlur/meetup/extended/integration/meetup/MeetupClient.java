@@ -1,5 +1,6 @@
 package com.bazlur.meetup.extended.integration.meetup;
 
+import com.bazlur.meetup.extended.MxProperties;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -31,14 +32,11 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class MeetupClient {
 	private static final Logger LOGGER = getLogger(MeetupClient.class);
 
-	@Value("${meetup.api.key}")
-	private String apiToken;
-
 	private final RestTemplate restTemplate;
 
-	public MeetupClient(RestTemplateBuilder restTemplateBuilder) {
+	public MeetupClient(RestTemplateBuilder restTemplateBuilder, MxProperties mxProperties) {
 		this.restTemplate = restTemplateBuilder.additionalCustomizers(rt ->
-			rt.getInterceptors().add(new MeetupAppTokenInterceptor(apiToken)))
+			rt.getInterceptors().add(new MeetupAppTokenInterceptor(mxProperties.getMeetup().getToken())))
 			.build();
 	}
 
