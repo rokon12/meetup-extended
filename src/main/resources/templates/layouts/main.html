@@ -33,6 +33,31 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
+            <ul class="nav navbar-nav">
+                <li th:class="${navSection == 'home' ? 'active' : ''}"><a th:href="@{/}">Home</a></li>
+                <li th:class="${navSection == 'submit' ? 'active' : ''}"><a th:href="@{/submit}">Submit</a></li>
+                <li th:class="${navSection == 'news' ? 'active' : ''}"><a th:href="@{/news}">News</a></li>
+            </ul>
+
+            <a class="btn btn-default navbar-btn navbar-right" sec:authorize="!hasRole('ROLE_USER')" th:href="@{/login}" role="button">Login</a>
+            <ul class="nav navbar-nav navbar-right" sec:authorize="hasRole('ROLE_USER')">
+                <li class="dropdown">
+                    <a id="user-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false"><img th:src="${#authentication.principal.avatarUrl}"
+                                                                       height="30" width="30"/> <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header" th:text="${#authentication.principal.github}">the_username</li>
+                        <li><a id="profile" href="https://github.com/settings/profile">GitHub Profile</a></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post" role="logout">
+                                <button type="submit" class="btn btn-link">Sign Out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            
         </div>
     </div>
 </nav>

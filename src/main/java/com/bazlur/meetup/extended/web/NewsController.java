@@ -13,21 +13,22 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @since 1/30/17.
  */
 @Controller
+@Navigation(Section.NEWS)
 public class NewsController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(NewsController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NewsController.class);
 
-	private final MeetupClient meetupClient;
+    private final MeetupClient meetupClient;
 
-	public NewsController(MeetupClient meetupClient) {
-		this.meetupClient = meetupClient;
-	}
+    public NewsController(MeetupClient meetupClient) {
+        this.meetupClient = meetupClient;
+    }
 
-	@GetMapping("/news")
-	public String news(Model model) {
-		LOGGER.debug("serving news pages");
+    @GetMapping("/news")
+    public String news(Model model) {
+        LOGGER.debug("serving news pages");
 
-		model.addAttribute("meetups", meetupClient.getRecentNews());
-		return "news";
-	}
+        model.addAttribute("meetups", meetupClient.getRecentNews());
+        return "news";
+    }
 }

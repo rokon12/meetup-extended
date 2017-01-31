@@ -17,35 +17,36 @@ import javax.validation.Valid;
  * @since 1/31/17.
  */
 @Controller
+@Navigation(Section.SUBMIT)
 public class SubmissionConroller {
 
-	private final SubmissionService submissionService;
+    private final SubmissionService submissionService;
 
-	public SubmissionConroller(SubmissionService submissionService) {
-		this.submissionService = submissionService;
-	}
+    public SubmissionConroller(SubmissionService submissionService) {
+        this.submissionService = submissionService;
+    }
 
-	@RequestMapping(path = "/submit", method = RequestMethod.GET)
-	public String submitForm(Model model) {
-		model.addAttribute("tracks", Track.values());
+    @RequestMapping(path = "/submit", method = RequestMethod.GET)
+    public String submitForm(Model model) {
+        model.addAttribute("tracks", Track.values());
 
-		model.addAttribute("submissionForm", new SubmissionForm());
+        model.addAttribute("submissionForm", new SubmissionForm());
 
-		return "submit";
-	}
+        return "submit";
+    }
 
-	@RequestMapping(path = "/submit", method = RequestMethod.POST)
-	public String submit(@Valid SubmissionForm submissionForm, BindingResult bindingResult,
-	                     RedirectAttributes attributes, Model model) {
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("tracks", Track.values());
-			model.addAttribute("submissionForm", submissionForm);
+    @RequestMapping(path = "/submit", method = RequestMethod.POST)
+    public String submit(@Valid SubmissionForm submissionForm, BindingResult bindingResult,
+                         RedirectAttributes attributes, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("tracks", Track.values());
+            model.addAttribute("submissionForm", submissionForm);
 
-			return "submit";
-		} else {
-			this.submissionService.create((submissionForm));
-			attributes.addFlashAttribute("successMessage", "Thanks! Your talk proposal has been submitted.");
-			return "redirect:/submit";
-		}
-	}
+            return "submit";
+        } else {
+            this.submissionService.create((submissionForm));
+            attributes.addFlashAttribute("successMessage", "Thanks! Your talk proposal has been submitted.");
+            return "redirect:/submit";
+        }
+    }
 }

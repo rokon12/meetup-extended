@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @since 1/26/17.
  */
 @Controller
+@Navigation(Section.HOME)
 public class HomeController {
 
 	private final MeetupClient meetupClient;
