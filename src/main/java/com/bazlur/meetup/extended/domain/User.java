@@ -1,6 +1,7 @@
 package com.bazlur.meetup.extended.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +12,8 @@ import java.util.Set;
  * @since 1/31/17.
  */
 @Entity
-@Data
+@Getter
+@Setter
 public class User implements Serializable {
     @GeneratedValue
     @Id

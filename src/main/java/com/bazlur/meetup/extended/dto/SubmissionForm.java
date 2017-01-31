@@ -2,7 +2,6 @@ package com.bazlur.meetup.extended.dto;
 
 import com.bazlur.meetup.extended.domain.Track;
 import lombok.Data;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -16,13 +15,6 @@ import javax.validation.constraints.Size;
 public class SubmissionForm {
 	@NotNull
 	private Track track;
-
-	@NotEmpty(message = "Speaker Name should not be empty")
-	private String speakerName;
-
-	@Email
-	@NotEmpty(message = "Email should not be empty")
-	private String email;
 
 	@NotEmpty(message = "Title should not be empty")
 	@Size(max = 200)

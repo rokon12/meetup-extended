@@ -25,12 +25,6 @@ public class Submission implements Serializable {
     private Track track;
 
     @Column
-    private String speakerName;
-
-    @Column
-    private String email;
-
-    @Column
     private String title;
 
     @Column

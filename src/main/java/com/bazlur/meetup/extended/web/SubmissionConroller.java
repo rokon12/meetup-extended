@@ -1,8 +1,10 @@
 package com.bazlur.meetup.extended.web;
 
 import com.bazlur.meetup.extended.domain.Track;
+import com.bazlur.meetup.extended.domain.User;
 import com.bazlur.meetup.extended.dto.SubmissionForm;
 import com.bazlur.meetup.extended.service.SubmissionService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,6 +39,7 @@ public class SubmissionConroller {
 
     @RequestMapping(path = "/submit", method = RequestMethod.POST)
     public String submit(@Valid SubmissionForm submissionForm, BindingResult bindingResult,
+                         @AuthenticationPrincipal User user,
                          RedirectAttributes attributes, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("tracks", Track.values());
@@ -44,7 +47,7 @@ public class SubmissionConroller {
 
             return "submit";
         } else {
-            this.submissionService.create((submissionForm));
+            this.submissionService.create(submissionForm, user);
             attributes.addFlashAttribute("successMessage", "Thanks! Your talk proposal has been submitted.");
             return "redirect:/submit";
         }
