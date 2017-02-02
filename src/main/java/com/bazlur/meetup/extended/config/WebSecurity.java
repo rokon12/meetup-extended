@@ -65,23 +65,23 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PrincipalExtractor principalExtractor(GithubClient githubClient, UserRepository userRepository) {
+
         return map -> {
             String githubLogin = (String) map.get("login");
             LOGGER.info("githubLogin:{}", githubLogin);
 
-            User speaker = userRepository.findByGithub(githubLogin);
-            if (speaker == null) {
-                LOGGER.info("Initialize user with githubId {}", githubLogin);
-                GithubUser user = githubClient.getUser(githubLogin);
-                speaker = new User();
-                speaker.setEmail(user.getEmail());
-                speaker.setName(user.getName());
-                speaker.setGithub(githubLogin);
-                speaker.setAvatarUrl(user.getAvatar());
-                userRepository.save(speaker);
-            }
+            return userRepository.findByGithub(githubLogin)
+                    .orElseGet(() -> {
+                        GithubUser user = githubClient.getUser(githubLogin);
+                        User speaker = new User();
+                        speaker.setEmail(user.getEmail());
+                        speaker.setName(user.getName());
+                        speaker.setGithub(githubLogin);
+                        speaker.setAvatarUrl(user.getAvatar());
 
-            return speaker;
+                        return userRepository.save(speaker);
+                    });
+
         };
     }
 }

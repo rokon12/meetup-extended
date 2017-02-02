@@ -12,6 +12,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'war' // incase you want to build war 
 apply plugin: 'org.springframework.boot'
 
 jar {
