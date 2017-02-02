@@ -15,8 +15,6 @@ public class MxProperties {
 
     private final Security security = new Security();
 
-    private final Meetup meetup = new Meetup();
-
     public Github getGithub() {
         return this.github;
     }
@@ -60,17 +58,5 @@ public class MxProperties {
             this.admins = admins;
         }
 
-    }
-
-    public static class Meetup {
-        private String token;
-
-        public String getToken() {
-            return this.token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
     }
 }

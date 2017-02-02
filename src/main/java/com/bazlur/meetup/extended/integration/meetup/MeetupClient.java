@@ -25,7 +25,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 /**
  * @author Bazlur Rahman Rokon
  * @since 1/30/17.
- * https://www.youtube.com/watch?v=o69o-U5ZxWU
  */
 @Service
 public class MeetupClient {
@@ -33,10 +32,8 @@ public class MeetupClient {
 
     private final RestTemplate restTemplate;
 
-    public MeetupClient(RestTemplateBuilder restTemplateBuilder, MxProperties mxProperties) {
-        this.restTemplate = restTemplateBuilder.additionalCustomizers(rt ->
-                rt.getInterceptors().add(new MeetupAppTokenInterceptor(mxProperties.getMeetup().getToken())))
-                .build();
+    public MeetupClient() {
+        this.restTemplate = new RestTemplate();
     }
 
     @Cacheable("meetup.schedules")
@@ -64,27 +61,6 @@ public class MeetupClient {
                     .accept(MediaType.APPLICATION_JSON).build();
         } catch (URISyntaxException ex) {
             throw new IllegalStateException("Invalid URL " + url, ex);
-        }
-    }
-
-    private static class MeetupAppTokenInterceptor implements ClientHttpRequestInterceptor {
-
-        private final String token;
-
-        MeetupAppTokenInterceptor(String token) {
-            this.token = token;
-        }
-
-        @Override
-        public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] bytes,
-                                            ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {
-
-            if (StringUtils.hasText(this.token)) {
-                byte[] basicAuthValue = this.token.getBytes(StandardCharsets.UTF_8);
-                httpRequest.getHeaders().set(HttpHeaders.AUTHORIZATION,
-                        "Basic " + Base64Utils.encodeToString(basicAuthValue));
-            }
-            return clientHttpRequestExecution.execute(httpRequest, bytes);
         }
     }
 }
